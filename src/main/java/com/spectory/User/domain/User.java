@@ -2,10 +2,7 @@ package com.spectory.User.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
@@ -23,4 +20,11 @@ public class User {
 
     @Column(length=30, nullable = false)
     private String nickname;
+
+    @Builder
+    public User(String id, String pw, String nickname) {
+        this.id = id;
+        this.pw = pw;
+        this.nickname = nickname;
+    }
 }
