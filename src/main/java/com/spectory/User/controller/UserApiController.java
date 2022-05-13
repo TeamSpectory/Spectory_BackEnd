@@ -7,7 +7,6 @@ import com.spectory.User.dto.ResponseDto;
 import com.spectory.User.dto.UserJoinResponseDto;
 import com.spectory.User.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +18,11 @@ public class UserApiController {
     private final UserService userService;
     @PostMapping("join")
     public ResponseEntity join(@RequestBody UserJoinRequestDto requestDto) {
-        UserJoinResponseDto userJoinResponseDto = userService.join(requestDto);
-        return new ResponseEntity(ResponseDto.res(Status.OK, Message.JOIN_SUCCESS, userJoinResponseDto), HttpStatus.OK);
+        try {
+            UserJoinResponseDto userJoinResponseDto = userService.join(requestDto);
+            return ResponseEntity.ok().body(ResponseDto.res(Status.OK, Message.JOIN_SUCCESS, userJoinResponseDto));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(ResponseDto.res(Status.BAD_REQUEST, Message.MISSING_ARGUMENT));
+        }
     }
 }

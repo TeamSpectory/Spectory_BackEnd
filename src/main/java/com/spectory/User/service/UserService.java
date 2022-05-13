@@ -13,8 +13,12 @@ public class UserService {
     private final UserRepository userRepository;
 
     @Transactional
-    public UserJoinResponseDto join(UserJoinRequestDto requestDto) {
-        Long userIdx = userRepository.save(requestDto.toEntity()).getUserId();
-        return new UserJoinResponseDto(userIdx);
+    public UserJoinResponseDto join(UserJoinRequestDto requestDto) throws Exception {
+        if (requestDto.getId().length() == 0 || requestDto.getPw().length() == 0 || requestDto.getNickname().length() == 0) {
+            throw new Exception("필요 데이터 누락");
+        } else {
+            Long userIdx = userRepository.save(requestDto.toEntity()).getUserId();
+            return new UserJoinResponseDto(userIdx);
+        }
     }
 }
