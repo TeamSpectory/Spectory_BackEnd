@@ -15,7 +15,7 @@ public class User {
     @Column(length=30, nullable = false)
     private String id;
 
-    @Column(length=30, nullable = false)
+    @Column(length=60, nullable = false)
     private String pw;
 
     @Column(length=30, nullable = false)
