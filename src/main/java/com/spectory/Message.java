@@ -5,6 +5,7 @@ public class Message {
     public static final String JOIN_FAIL = "회원가입 실패";
     public static final String LOGIN_SUCCESS = "로그인 성공";
     public static final String LOGIN_FAIL = "로그인 실패";
+    public static final String ID_PW_ERROR = "아이디 또는 패스워드 오류";
     public static final String MISSING_ARGUMENT = "필수 데이터 누락";
     public static final String INTERNAL_SERVER_ERR = "서버 에러";
 }
