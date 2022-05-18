@@ -2,9 +2,7 @@ package com.spectory.User.controller;
 
 import com.spectory.Message;
 import com.spectory.Status;
-import com.spectory.User.dto.UserJoinRequestDto;
-import com.spectory.User.dto.ResponseDto;
-import com.spectory.User.dto.UserJoinResponseDto;
+import com.spectory.User.dto.*;
 import com.spectory.User.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -24,5 +22,17 @@ public class UserApiController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(ResponseDto.res(Status.BAD_REQUEST, Message.MISSING_ARGUMENT));
         }
+    }
+
+    @PostMapping("login")
+    public ResponseEntity login(@RequestBody UserLoginRequestDto requestDto){
+
+        try {
+            UserLoginResponseDto userLoginResponseDto = userService.login(requestDto.getId(), requestDto.getPw());
+            return ResponseEntity.ok().body(ResponseDto.res(Status.OK, Message.LOGIN_SUCCESS,userLoginResponseDto));
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(ResponseDto.res(Status.BAD_REQUEST, Message.ID_PW_ERROR));
+        }
+
     }
 }
