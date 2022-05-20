@@ -7,7 +7,10 @@ import lombok.Getter;
 @Getter
 public class UserLoginResponseDto {
         private Long userIdx;
-        public UserLoginResponseDto (Long userIdx) {
+        private String token;
+
+        public UserLoginResponseDto (Long userIdx, String token) {
             this.userIdx = userIdx;
+            this.token = token;
         }
 }
