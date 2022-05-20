@@ -7,6 +7,7 @@ import com.spectory.User.domain.UserRepository;
 import com.spectory.User.dto.UserJoinRequestDto;
 import com.spectory.User.dto.UserJoinResponseDto;
 import com.spectory.User.dto.UserLoginResponseDto;
+import com.spectory.User.dto.UserProfileResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -43,6 +44,10 @@ public class UserService {
             String token = jsonWebTokenProvider.createToken(id);
             return new UserLoginResponseDto(user.get().getUserId(), token);
         }
+    }
 
+    public UserProfileResponseDto getProfile(long userIdx) throws Exception {
+        Optional<User> user = userRepository.findById(userIdx);
+        return new UserProfileResponseDto(user.get().getNickname(), user.get().getId());
     }
 }

@@ -2,12 +2,15 @@ package com.spectory.User.controller;
 
 import com.spectory.Message;
 import com.spectory.Status;
+import com.spectory.User.domain.User;
 import com.spectory.User.dto.*;
 import com.spectory.User.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
@@ -26,13 +29,22 @@ public class UserApiController {
 
     @PostMapping("login")
     public ResponseEntity login(@RequestBody UserLoginRequestDto requestDto){
-
         try {
             UserLoginResponseDto userLoginResponseDto = userService.login(requestDto.getId(), requestDto.getPw());
             return ResponseEntity.ok().body(ResponseDto.res(Status.OK, Message.LOGIN_SUCCESS,userLoginResponseDto));
-        }catch (Exception e){
+        } catch (Exception e){
             return ResponseEntity.badRequest().body(ResponseDto.res(Status.BAD_REQUEST, Message.ID_PW_ERROR));
         }
 
+    }
+
+    @GetMapping("profile/{userIdx}")
+    public ResponseEntity profile(@PathVariable("userIdx") long userIdx) {
+        try {
+            UserProfileResponseDto userProfileResponseDto = userService.getProfile(userIdx);
+            return ResponseEntity.ok().body(ResponseDto.res(Status.OK, Message.GET_PROFILE_SUCCESS, userProfileResponseDto));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(ResponseDto.res(Status.NOT_FOUND, Message.INVALID_USER));
+        }
     }
 }
