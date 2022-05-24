@@ -2,15 +2,12 @@ package com.spectory.User.controller;
 
 import com.spectory.Message;
 import com.spectory.Status;
-import com.spectory.User.domain.User;
 import com.spectory.User.dto.*;
 import com.spectory.User.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
@@ -23,7 +20,7 @@ public class UserApiController {
             UserJoinResponseDto userJoinResponseDto = userService.join(requestDto);
             return ResponseEntity.ok().body(ResponseDto.res(Status.OK, Message.JOIN_SUCCESS, userJoinResponseDto));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(ResponseDto.res(Status.BAD_REQUEST, Message.MISSING_ARGUMENT));
+            return ResponseEntity.badRequest().body(ResponseDto.res(Status.BAD_REQUEST, e.getMessage()));
         }
     }
 
@@ -47,4 +44,15 @@ public class UserApiController {
             return ResponseEntity.badRequest().body(ResponseDto.res(Status.NOT_FOUND, Message.INVALID_USER));
         }
     }
+
+    @DeleteMapping("delete/{userIdx}")
+    public ResponseEntity deleteUser(@PathVariable("userIdx") long userIdx, @RequestBody UserDeleteRequestDto deleteRequestDto) {
+        try {
+            userService.deleteUser(deleteRequestDto, userIdx);
+            return ResponseEntity.ok().body(ResponseDto.res(Status.OK, Message.DELETE_USER_SUCCESS));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(ResponseDto.res(Status.INTERNAL_SERVER_ERR, e.getMessage()));
+        }
+    }
+
 }
