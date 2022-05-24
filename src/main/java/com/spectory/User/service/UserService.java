@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -33,14 +34,20 @@ public class UserService {
 
     @Transactional
     public UserLoginResponseDto login(String id, String pw) throws Exception {
-        Optional<User> user = userRepository.findById(id);
-        if (!passwordEncoder.matches(pw, user.get().getPw())){
-            throw new Exception(Message.ID_PW_ERROR);
+
+        try{
+            Optional<User> user = userRepository.findById(id);
+            if (!passwordEncoder.matches(pw, user.get().getPw())){
+                throw new Exception(Message.ID_PW_ERROR);
+            }
+            else {
+                String token = jsonWebTokenProvider.createToken(id);
+                return new UserLoginResponseDto(user.get().getUserId(), token);
+            }
+        }catch (NoSuchElementException e){
+            throw new NoSuchElementException(Message.ID_PW_ERROR);
         }
-        else {
-            String token = jsonWebTokenProvider.createToken(id);
-            return new UserLoginResponseDto(user.get().getUserId(), token);
-        }
+
     }
 
     public UserProfileResponseDto getProfile(long userIdx) throws Exception {
