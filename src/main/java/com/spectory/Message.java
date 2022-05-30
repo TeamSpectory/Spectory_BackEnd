@@ -3,6 +3,7 @@ package com.spectory;
 public class Message {
     public static final String JOIN_SUCCESS = "회원가입 성공";
     public static final String JOIN_FAIL = "회원가입 실패";
+    public static final String ALREADY_EXIST = "이미 존재하는 아이디";
     public static final String LOGIN_SUCCESS = "로그인 성공";
     public static final String LOGIN_FAIL = "로그인 실패";
     public static final String ID_PW_ERROR = "아이디 또는 패스워드 오류";
