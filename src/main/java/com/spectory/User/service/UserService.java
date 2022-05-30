@@ -53,7 +53,7 @@ public class UserService {
     public UserProfileResponseDto getProfile(long userIdx) throws Exception {
         try {
             Optional<User> user = userRepository.findById(userIdx);
-            return new UserProfileResponseDto(user.get().getNickname(), user.get().getId());
+            return new UserProfileResponseDto(user.get().getNickname(), user.get().getId(), user.get().getCreated_date());
         } catch (Exception e) {
             throw new Exception(Message.INVALID_USER);
         }
