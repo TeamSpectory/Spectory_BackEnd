@@ -1,5 +1,6 @@
 package com.spectory.Post.service;
 
+import com.spectory.Message;
 import com.spectory.Post.domain.Post;
 import com.spectory.Post.domain.PostRepository;
 import com.spectory.User.domain.User;
@@ -42,4 +43,12 @@ public class PostService {
         return rtnList;
     }
 
+    public Optional<Post> getDetail(Long postIdx) throws Exception {
+        Optional<Post> post = postRepository.findById(postIdx);
+        if (post.isEmpty()) {
+            throw new Exception(Message.INVALID_POST);
+        } else {
+            return post;
+        }
+    }
 }

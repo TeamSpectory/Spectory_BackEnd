@@ -1,6 +1,8 @@
 package com.spectory.Post.controller;
 
 import com.spectory.Message;
+import com.spectory.Post.domain.Post;
+import com.spectory.Post.dto.PostDetailResponseDto;
 import com.spectory.Status;
 import com.spectory.Post.dto.PostListResponseDto;
 import com.spectory.Post.dto.PostSaveRequestDto;
@@ -12,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
@@ -38,5 +41,14 @@ public class PostApiController {
         return postListResponseDtoList;
     }
 
-
+    @GetMapping("detail/{postIdx}")
+    public ResponseEntity getDetailPost(@PathVariable("postIdx") Long postIdx) {
+        try {
+            Optional<Post> post = postService.getDetail(postIdx);
+            PostDetailResponseDto postDetailResponseDto = new PostDetailResponseDto(post);
+            return ResponseEntity.ok().body(ResponseDto.res(Status.OK, Message.GET_DETAIL_POST_SUCCESS, postDetailResponseDto));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(ResponseDto.res(Status.BAD_REQUEST, e.getMessage()));
+        }
+    }
 }
