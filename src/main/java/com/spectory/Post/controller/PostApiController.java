@@ -1,11 +1,11 @@
-package com.spectory.User.controller;
+package com.spectory.Post.controller;
 
 import com.spectory.Message;
 import com.spectory.Status;
-import com.spectory.User.dto.PostListResponseDto;
-import com.spectory.User.dto.PostSaveRequestDto;
+import com.spectory.Post.dto.PostListResponseDto;
+import com.spectory.Post.dto.PostSaveRequestDto;
 import com.spectory.User.dto.ResponseDto;
-import com.spectory.User.service.PostService;
+import com.spectory.Post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

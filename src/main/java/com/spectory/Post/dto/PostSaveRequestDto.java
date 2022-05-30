@@ -1,7 +1,7 @@
-package com.spectory.User.dto;
+package com.spectory.Post.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.spectory.User.domain.Post;
+import com.spectory.Post.domain.Post;
 import com.spectory.User.domain.User;
 import lombok.Builder;
 import lombok.Getter;

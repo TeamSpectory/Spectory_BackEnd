@@ -1,4 +1,4 @@
-package com.spectory.User.dto;
+package com.spectory.Post.dto;
 
 import com.spectory.User.domain.User;
 import lombok.Builder;

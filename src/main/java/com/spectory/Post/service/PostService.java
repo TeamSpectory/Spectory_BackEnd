@@ -1,16 +1,15 @@
-package com.spectory.User.service;
+package com.spectory.Post.service;
 
-import com.spectory.User.domain.Post;
-import com.spectory.User.domain.PostRepository;
+import com.spectory.Post.domain.Post;
+import com.spectory.Post.domain.PostRepository;
 import com.spectory.User.domain.User;
 import com.spectory.User.domain.UserRepository;
-import com.spectory.User.dto.PostListResponseDto;
-import com.spectory.User.dto.PostSaveRequestDto;
+import com.spectory.Post.dto.PostListResponseDto;
+import com.spectory.Post.dto.PostSaveRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
