@@ -2,6 +2,7 @@ package com.spectory.Post.controller;
 
 import com.spectory.Message;
 import com.spectory.Post.domain.Post;
+import com.spectory.Post.dto.PostDeleteRequestDto;
 import com.spectory.Post.dto.PostDetailResponseDto;
 import com.spectory.Status;
 import com.spectory.Post.dto.PostListResponseDto;
@@ -25,14 +26,12 @@ public class PostApiController {
 
     @PostMapping("write")
     public ResponseEntity save(@RequestBody PostSaveRequestDto postSaveRequestDto){
-
         try{
             postService.save(postSaveRequestDto);
             return ResponseEntity.ok().body(ResponseDto.res(Status.OK, Message.POST_SAVE_SUCCESS));
         }catch(Exception e){
             return ResponseEntity.badRequest().body(ResponseDto.res(Status.BAD_REQUEST, e.getMessage()));
         }
-
     }
 
     @GetMapping("list/{userIdx}")
@@ -51,4 +50,15 @@ public class PostApiController {
             return ResponseEntity.badRequest().body(ResponseDto.res(Status.BAD_REQUEST, e.getMessage()));
         }
     }
+
+    @DeleteMapping("delete/{postIdx}")
+    public ResponseEntity deletePost(@PathVariable("postIdx") Long postIdx, @RequestBody PostDeleteRequestDto postDeleteRequestDto) {
+        try {
+            postService.deletePost(postDeleteRequestDto, postIdx);
+            return ResponseEntity.ok(ResponseDto.res(Status.OK, Message.DELETE_POST_SUCCESS));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(ResponseDto.res(Status.BAD_REQUEST, e.getMessage()));
+        }
+    }
+    
 }
