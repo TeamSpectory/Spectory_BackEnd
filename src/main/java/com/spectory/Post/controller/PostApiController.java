@@ -60,5 +60,14 @@ public class PostApiController {
             return ResponseEntity.badRequest().body(ResponseDto.res(Status.BAD_REQUEST, e.getMessage()));
         }
     }
-    
+
+    @DeleteMapping("delete-all/{userIdx}")
+    public ResponseEntity deleteAllPost(@PathVariable("userIdx") Long userIdx, @RequestBody PostDeleteRequestDto postDeleteRequestDto) {
+        try {
+            postService.deleteAllPost(postDeleteRequestDto, userIdx);
+            return ResponseEntity.ok(ResponseDto.res(Status.OK, Message.DELETE_POST_SUCCESS));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(ResponseDto.res(Status.BAD_REQUEST, e.getMessage()));
+        }
+    }
 }

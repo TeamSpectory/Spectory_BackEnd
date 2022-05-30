@@ -74,4 +74,22 @@ public class PostService {
             }
         }
     }
+
+    @Transactional
+    public boolean deleteAllPost(PostDeleteRequestDto postDeleteRequestDto, Long userIdx) throws Exception {
+        if (postDeleteRequestDto.getToken().isEmpty()) {
+            throw new Exception(Message.MISSING_ARGUMENT);
+        }
+        if (jsonWebTokenProvider.validateToken(postDeleteRequestDto.getToken()) == false) {
+            throw new Exception(Message.TOKEN_AUTHENTICATION_FAIL);
+        }
+        try {
+            Optional<User> user = userRepository.findById(userIdx);
+            List<Post> postList = postRepository.findByWriter(user.get());
+            postRepository.deleteAll(postList);
+            return true;
+        } catch (Exception e) {
+            throw new Exception(Message.DELETE_POST_FAIL);
+        }
+    }
 }
