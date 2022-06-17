@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 @Getter
 public class PostListResponseDto {
-
+    private Long postIdx;
     private Long type;
     private String title;
     private LocalDate startDate;
@@ -17,7 +17,8 @@ public class PostListResponseDto {
     private int rates;
     private String tags;
 
-    public PostListResponseDto(Long type, String title, LocalDate startDate, LocalDate endDate, String picture, int rates, String tags) {
+    public PostListResponseDto(Long postIdx, Long type, String title, LocalDate startDate, LocalDate endDate, String picture, int rates, String tags) {
+        this.postIdx = postIdx;
         this.type = type;
         this.title = title;
         this.startDate = startDate;

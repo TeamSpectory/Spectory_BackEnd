@@ -37,7 +37,7 @@ public class PostService {
 
         List<PostListResponseDto> rtnList = new ArrayList<PostListResponseDto>();
         for (Post p : allPost){
-            rtnList.add(new PostListResponseDto(p.getType(),p.getTitle(),p.getStartDate(),p.getEndDate()
+            rtnList.add(new PostListResponseDto(p.getPostId(),p.getType(),p.getTitle(),p.getStartDate(),p.getEndDate()
             ,p.getPicture(),p.getRates(),p.getTags()));
         }
 
