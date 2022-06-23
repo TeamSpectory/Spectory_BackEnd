@@ -12,6 +12,7 @@ import com.spectory.Post.dto.PostSaveRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,11 +24,23 @@ public class PostService {
     private final JsonWebTokenProvider jsonWebTokenProvider;
     private final PostRepository postRepository;
     private final UserRepository userRepository;
-
+    private final ImageUploadService imageUploadService;
     @Transactional
-    public Long save(PostSaveRequestDto requestDto) {
-        Optional<User> writer = userRepository.findById(requestDto.getUserIdx());
-        return postRepository.save(requestDto.toEntity(writer.get())).getPostId();
+    public Long save(PostSaveRequestDto requestDto, MultipartFile image) throws Exception {
+        try {
+            Optional<User> writer = userRepository.findById(requestDto.getUserIdx());
+            if (image != null) {
+                try {
+                    String fileURL = imageUploadService.imageUpload(image);
+                    requestDto.setPicture(fileURL);
+                } catch (Exception e) {
+                    throw new Exception(Message.IMAGE_UPLOAD_FAIL);
+                }
+            }
+            return postRepository.save(requestDto.toEntity(writer.get())).getPostId();
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
     }
 
     @Transactional

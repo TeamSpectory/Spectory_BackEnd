@@ -19,4 +19,5 @@ public class Message {
     public static final String GET_DETAIL_POST_SUCCESS = "게시물 상세정보 로드 성공";
     public static final String DELETE_POST_SUCCESS = "게시글 삭제 성공";
     public static final String DELETE_POST_FAIL = "게시글 삭제 실패";
+    public static final String IMAGE_UPLOAD_FAIL = "이미지 업로드 실패";
 }

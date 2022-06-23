@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,13 +21,12 @@ import java.util.Optional;
 @RestController
 @RequestMapping(value = "/post", consumes = MediaType.APPLICATION_JSON_VALUE)
 public class PostApiController {
-
     private final PostService postService;
 
-    @PostMapping("write")
-    public ResponseEntity save(@RequestBody PostSaveRequestDto postSaveRequestDto){
+    @PostMapping(value = "write", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity save(PostSaveRequestDto postSaveRequestDto, @RequestPart(required = false) MultipartFile image){
         try{
-            postService.save(postSaveRequestDto);
+            postService.save(postSaveRequestDto, image);
             return ResponseEntity.ok().body(ResponseDto.res(Status.OK, Message.POST_SAVE_SUCCESS));
         }catch(Exception e){
             return ResponseEntity.badRequest().body(ResponseDto.res(Status.BAD_REQUEST, e.getMessage()));
