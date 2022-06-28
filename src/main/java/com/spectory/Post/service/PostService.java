@@ -5,6 +5,7 @@ import com.spectory.Message;
 import com.spectory.Post.domain.Post;
 import com.spectory.Post.domain.PostRepository;
 import com.spectory.Post.dto.PostDeleteRequestDto;
+import com.spectory.Post.dto.PostModifyRequestDto;
 import com.spectory.User.domain.User;
 import com.spectory.User.domain.UserRepository;
 import com.spectory.Post.dto.PostListResponseDto;
@@ -41,6 +42,15 @@ public class PostService {
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
+    }
+
+    @Transactional
+    public Long modify(Long postId, PostModifyRequestDto postModifyRequestDto) {
+        Optional<Post> post = postRepository.findById(postId);
+        post.get().modify(postModifyRequestDto.getTitle(), postModifyRequestDto.getStartDate(), postModifyRequestDto.getEndDate(),
+                postModifyRequestDto.getSituation(), postModifyRequestDto.getAction(), postModifyRequestDto.getLearned(),
+                postModifyRequestDto.getPicture(),postModifyRequestDto.getRates(),postModifyRequestDto.getTags());
+        return post.get().getPostId();
     }
 
     @Transactional
