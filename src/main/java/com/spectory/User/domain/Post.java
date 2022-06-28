@@ -65,4 +65,18 @@ public class Post {
         this.tags = tags;
     }
 
+    public void modify(String title, LocalDate startDate, LocalDate endDate, String situation, String action, String learned, String picture, int rates, String tags){
+        this.type = type;
+        this.writer = writer;
+        this.title = title;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.situation = situation;
+        this.action = action;
+        this.learned = learned;
+        this.picture = picture;
+        this.rates = rates;
+        this.tags = tags;
+    }
+
 }
