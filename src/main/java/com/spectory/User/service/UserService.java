@@ -25,6 +25,10 @@ public class UserService {
         if (requestDto.getId().length() == 0 || requestDto.getPw().length() == 0 || requestDto.getNickname().length() == 0) {
             throw new Exception(Message.MISSING_ARGUMENT);
         } else {
+            Optional<User> user = userRepository.findById(requestDto.getId());
+            if (user.isEmpty() == false) {
+                throw new Exception(Message.ALREADY_EXIST);
+            }
             String password = passwordEncoder.encode(requestDto.getPw());
             UserJoinRequestDto dto = new UserJoinRequestDto(requestDto.getId(), password, requestDto.getNickname());
             Long userIdx = userRepository.save(dto.toEntity()).getUserId();
@@ -34,7 +38,6 @@ public class UserService {
 
     @Transactional
     public UserLoginResponseDto login(String id, String pw) throws Exception {
-
         try{
             Optional<User> user = userRepository.findById(id);
             if (!passwordEncoder.matches(pw, user.get().getPw())){
@@ -53,7 +56,7 @@ public class UserService {
     public UserProfileResponseDto getProfile(long userIdx) throws Exception {
         try {
             Optional<User> user = userRepository.findById(userIdx);
-            return new UserProfileResponseDto(user.get().getNickname(), user.get().getId());
+            return new UserProfileResponseDto(user.get().getNickname(), user.get().getId(), user.get().getCreated_date());
         } catch (Exception e) {
             throw new Exception(Message.INVALID_USER);
         }

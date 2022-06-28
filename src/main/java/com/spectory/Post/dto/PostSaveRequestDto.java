@@ -1,22 +1,26 @@
-package com.spectory.User.dto;
+package com.spectory.Post.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.spectory.User.domain.Post;
+import com.spectory.Post.domain.Post;
 import com.spectory.User.domain.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 
 @Getter
+@Setter
 @NoArgsConstructor
 public class PostSaveRequestDto {
 
     private Long type;
     private String title;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private LocalDate startDate;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private LocalDate endDate;
     private String situation;
     private String action;

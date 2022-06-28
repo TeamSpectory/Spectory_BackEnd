@@ -1,5 +1,6 @@
-package com.spectory.User.domain;
+package com.spectory.Post.domain;
 
+import com.spectory.User.domain.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
