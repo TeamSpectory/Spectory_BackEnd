@@ -14,4 +14,5 @@ public class Message {
     public static final String TOKEN_AUTHENTICATION_FAIL = "토큰 인증 실패";
     public static final String INTERNAL_SERVER_ERR = "서버 에러";
     public static final String POST_SAVE_SUCCESS = "게시글 작성 성공";
+    public static final String POST_MODIFY_SUCCESS = "게시글 수정 성공";
 }
