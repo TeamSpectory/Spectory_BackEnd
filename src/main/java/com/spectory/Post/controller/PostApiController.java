@@ -2,11 +2,8 @@ package com.spectory.Post.controller;
 
 import com.spectory.Message;
 import com.spectory.Post.domain.Post;
-import com.spectory.Post.dto.PostDeleteRequestDto;
-import com.spectory.Post.dto.PostDetailResponseDto;
+import com.spectory.Post.dto.*;
 import com.spectory.Status;
-import com.spectory.Post.dto.PostListResponseDto;
-import com.spectory.Post.dto.PostSaveRequestDto;
 import com.spectory.User.dto.ResponseDto;
 import com.spectory.Post.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -58,6 +55,18 @@ public class PostApiController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(ResponseDto.res(Status.BAD_REQUEST, e.getMessage()));
         }
+    }
+
+    @PatchMapping("modify/{postIdx}")
+    public ResponseEntity modify(@PathVariable("postIdx") Long postIdx, @RequestBody PostModifyRequestDto postModifyRequestDto) {
+
+        try {
+            postService.modify(postIdx, postModifyRequestDto);
+            return ResponseEntity.ok().body(ResponseDto.res(Status.OK, Message.POST_MODIFY_SUCCESS));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(ResponseDto.res(Status.BAD_REQUEST, e.getMessage()));
+        }
+
     }
 
     @DeleteMapping("delete-all/{userIdx}")

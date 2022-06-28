@@ -5,6 +5,7 @@ import com.spectory.Message;
 import com.spectory.Post.domain.Post;
 import com.spectory.Post.domain.PostRepository;
 import com.spectory.Post.dto.PostDeleteRequestDto;
+import com.spectory.Post.dto.PostModifyRequestDto;
 import com.spectory.User.domain.User;
 import com.spectory.User.domain.UserRepository;
 import com.spectory.Post.dto.PostListResponseDto;
@@ -21,10 +22,12 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Service
 public class PostService {
+
     private final JsonWebTokenProvider jsonWebTokenProvider;
     private final PostRepository postRepository;
     private final UserRepository userRepository;
     private final ImageUploadService imageUploadService;
+
     @Transactional
     public Long save(PostSaveRequestDto requestDto, MultipartFile image) throws Exception {
         try {
@@ -64,6 +67,15 @@ public class PostService {
         } else {
             return post;
         }
+    }
+
+    @Transactional
+    public Long modify(Long postId, PostModifyRequestDto postModifyRequestDto) {
+        Optional<Post> post = postRepository.findById(postId);
+        post.get().modify(postModifyRequestDto.getTitle(), postModifyRequestDto.getStartDate(), postModifyRequestDto.getEndDate(),
+                postModifyRequestDto.getSituation(), postModifyRequestDto.getAction(), postModifyRequestDto.getLearned(),
+                postModifyRequestDto.getPicture(),postModifyRequestDto.getRates(),postModifyRequestDto.getTags());
+        return post.get().getPostId();
     }
 
     @Transactional
