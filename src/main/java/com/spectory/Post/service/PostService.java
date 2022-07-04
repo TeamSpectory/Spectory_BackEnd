@@ -30,6 +30,9 @@ public class PostService {
     public Long save(PostSaveRequestDto requestDto, MultipartFile image) throws Exception {
         try {
             Optional<User> writer = userRepository.findById(requestDto.getUserIdx());
+            if (requestDto.isEmpty() == true) {
+                throw new Exception(Message.MISSING_ARGUMENT);
+            }
             if (image != null) {
                 try {
                     String fileURL = imageUploadService.imageUpload(image);

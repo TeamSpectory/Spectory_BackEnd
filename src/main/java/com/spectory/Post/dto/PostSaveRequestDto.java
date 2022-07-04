@@ -61,4 +61,11 @@ public class PostSaveRequestDto {
                 .build();
     }
 
+    public boolean isEmpty() {
+        if (type == null || title == null || startDate == null || endDate == null || situation == null || action == null || learned == null || tags == null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
