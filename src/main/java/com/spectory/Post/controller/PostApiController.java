@@ -32,20 +32,23 @@ public class PostApiController {
 
     @PatchMapping("modify/{postIdx}")
     public ResponseEntity modify(@PathVariable("postIdx") Long postIdx, @RequestBody PostModifyRequestDto postModifyRequestDto) {
-
         try {
             postService.modify(postIdx, postModifyRequestDto);
             return ResponseEntity.ok().body(ResponseDto.res(Status.OK, Message.POST_MODIFY_SUCCESS));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(ResponseDto.res(Status.BAD_REQUEST, e.getMessage()));
         }
-
     }
 
     @GetMapping("list/{userIdx}")
-    public List<PostListResponseDto> findAll(@PathVariable("userIdx") Long userIdx){
-        List<PostListResponseDto> postListResponseDtoList = postService.findAll(userIdx);
-        return postListResponseDtoList;
+    public ResponseEntity findAll(@PathVariable("userIdx") Long userIdx) {
+        List<PostListResponseDto> postListResponseDtoList;
+        try {
+            postListResponseDtoList = postService.findAll(userIdx);
+            return ResponseEntity.ok().body(ResponseDto.res(Status.OK, Message.GET_ALL_POST_SUCCESS, postListResponseDtoList));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(ResponseDto.res(Status.BAD_REQUEST, e.getMessage()));
+        }
     }
 
     @GetMapping("detail/{postIdx}")

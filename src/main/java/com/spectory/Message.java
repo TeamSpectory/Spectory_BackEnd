@@ -15,6 +15,7 @@ public class Message {
     public static final String POST_SAVE_SUCCESS = "게시글 작성 성공";
     public static final String INVALID_POST = "존재하지 않는 게시물";
     public static final String ZERO_POST = "작성한 게시물이 없습니다.";
+    public static final String GET_ALL_POST_SUCCESS = "전체 게시물 로드 성공";
     public static final String GET_DETAIL_POST_SUCCESS = "게시물 상세정보 로드 성공";
     public static final String DELETE_POST_SUCCESS = "게시글 삭제 성공";
     public static final String DELETE_POST_FAIL = "게시글 삭제 실패";

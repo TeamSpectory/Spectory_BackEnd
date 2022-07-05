@@ -57,10 +57,12 @@ public class PostService {
     }
 
     @Transactional
-    public List<PostListResponseDto> findAll(Long userIdx) {
+    public List<PostListResponseDto> findAll(Long userIdx) throws Exception {
         Optional<User> writer = userRepository.findById(userIdx);
+        if (writer.isEmpty()) {
+            throw new Exception(Message.INVALID_USER);
+        }
         List<Post> allPost = postRepository.findByWriter(writer.get());
-
         List<PostListResponseDto> rtnList = new ArrayList<PostListResponseDto>();
         for (Post p : allPost){
             rtnList.add(new PostListResponseDto(p.getPostId(),p.getType(),p.getTitle(),p.getStartDate(),p.getEndDate()
