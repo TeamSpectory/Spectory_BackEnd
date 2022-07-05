@@ -1,4 +1,4 @@
-# 📃 자기소개서 작성의 시작, Spectory
+# 📃 자기소개서 작성의 시작, Spectory  
 
 <img src = "https://user-images.githubusercontent.com/50194490/177195899-b2dfe958-ff17-4179-98ef-fd1f74b5cf09.jpg" width = 75%>  
 
@@ -14,14 +14,21 @@
 | [조윤진](https://github.com/cyjadela) | [임예림](https://github.com/Yerim96) | [이상혁](https://github.com/hyeok2Wkd) | [최다연](https://github.com/dayeondayeon) |  
 
 
-## ▶ API  
+## [▶ API](https://github.com/TeamSpectory/Spectory_BackEnd/wiki)  
 | 도메인 | 화면 | 기능 설명 | 담당자 | 
 | ---- |------|----------|--------|
 | User | 로그인 | id, pw 기반의 로컬 로그인| 이상혁 |
 | User | 로그인 | 로그인 성공시 JWT 토큰 발급| 최다연 |
 | User | 회원가입 | id, pw, nickname 정보로 회원가입, 중복 검사, 비밀번호 암호화 | 최다연 |
-| User | 회원탈퇴 | jwt토큰 인증 후 회원정보 삭제 | 최다연 |
+| User | 내 프로필 조회 | JWT 토큰 인증 후 회원 탈퇴 | 최다연 |
 | User | 내 프로필 조회 | 회원 정보 조회 | 최다연 |  
+| Post | 내 프로필 조회 | JWT 토큰 인증 후 모든 글 삭제하기 | 최다연 | 
+| Post | 글 작성하기 | 글 작성하기 | 이상혁 |
+| Post | 글 작성하기 | 이미지 포함 글 작성, S3 업로드 | 최다연 |  
+| Post | 글 목록 | 전체 글 불러오기 | 이상혁 |
+| Post | 글 수정하기 | 글 수정하기 | 이상혁 |
+| Post | 게시글 상세정보 | JWT 토큰 인증 후 글 삭제하기 | 최다연 |
+| Post | 게시글 상세정보 | 게시글 상세정보 확인 | 최다연 |  
 
 
 ## ▶ Spectory Architecture  
@@ -82,6 +89,13 @@
                     UserService.java
                     
 ```
+
+## ▶ Spectory ERD  
+<img src = "https://user-images.githubusercontent.com/50194490/177384561-920c9b96-97e5-4e95-85e8-604b672c61ff.jpg">  
+
+## ▶ [Spectory Figma](https://www.figma.com/file/W1TTeCJ44de6gdOB6okgNm/spectory-project)  
+- Design : 임예림
+
 
 ## ▶ Commit Message Rules
 - 간단하고 명료한 형태로, [Commit Message] : [작업한 부분에 대한 설명]의 형태로 작성
