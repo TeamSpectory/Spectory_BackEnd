@@ -28,8 +28,11 @@ public class PostService {
     private final ImageUploadService imageUploadService;
     @Transactional
     public Long save(PostSaveRequestDto requestDto, MultipartFile image) throws Exception {
+        Optional<User> writer = userRepository.findById(requestDto.getUserIdx());
+        if (writer.isEmpty()) {
+            throw new Exception(Message.INVALID_USER);
+        }
         try {
-            Optional<User> writer = userRepository.findById(requestDto.getUserIdx());
             if (requestDto.isEmpty() == true) {
                 throw new Exception(Message.MISSING_ARGUMENT);
             }
