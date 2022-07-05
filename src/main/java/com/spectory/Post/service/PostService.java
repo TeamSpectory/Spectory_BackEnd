@@ -81,37 +81,50 @@ public class PostService {
 
     @Transactional
     public boolean deletePost(PostDeleteRequestDto postDeleteRequestDto, Long postIdx) throws Exception {
-        if (postDeleteRequestDto.getToken().isEmpty()) {
-            throw new Exception(Message.MISSING_ARGUMENT); // 토큰 누락 시 바로 에러 처리.
+        Optional<Post> post = postRepository.findById(postIdx);
+        if (post.isEmpty()) {
+            throw new Exception(Message.INVALID_POST);
         }
-        if (jsonWebTokenProvider.validateToken(postDeleteRequestDto.getToken()) == false) {
-            throw new Exception(Message.TOKEN_AUTHENTICATION_FAIL); // 토큰 인증 실패 시
-        } else {
-            Optional<Post> post = postRepository.findById(postIdx);
-            if (post.isEmpty()) {
-                throw new Exception(Message.INVALID_POST);
-            } else {
-                try {
-                    postRepository.deleteById(postIdx);
-                    return true;
-                } catch (Exception e) {
-                    throw new Exception(Message.DELETE_USER_FAIL);
+        else {
+            if (postDeleteRequestDto.getToken().isEmpty()) {
+                throw new Exception(Message.MISSING_ARGUMENT); // 토큰 누락 시 바로 에러 처리.
+            }
+            else {
+                if (jsonWebTokenProvider.validateToken(postDeleteRequestDto.getToken()) == false) {
+                    throw new Exception(Message.TOKEN_AUTHENTICATION_FAIL); // 토큰 인증 실패 시
                 }
             }
+        }
+
+        try {
+            postRepository.deleteById(postIdx);
+            return true;
+        } catch (Exception e) {
+            throw new Exception(Message.DELETE_USER_FAIL);
         }
     }
 
     @Transactional
     public boolean deleteAllPost(PostDeleteRequestDto postDeleteRequestDto, Long userIdx) throws Exception {
+        Optional<User> user = userRepository.findById(userIdx);
+        if (user.isEmpty()) {
+            throw new Exception(Message.INVALID_USER);
+        }
+
+        List<Post> postList = postRepository.findByWriter(user.get());
+        if (postList.size() == 0) {
+            throw new Exception(Message.ZERO_POST);
+        }
+
         if (postDeleteRequestDto.getToken().isEmpty()) {
             throw new Exception(Message.MISSING_ARGUMENT);
+        } else {
+            if (jsonWebTokenProvider.validateToken(postDeleteRequestDto.getToken()) == false) {
+                throw new Exception(Message.TOKEN_AUTHENTICATION_FAIL);
+            }
         }
-        if (jsonWebTokenProvider.validateToken(postDeleteRequestDto.getToken()) == false) {
-            throw new Exception(Message.TOKEN_AUTHENTICATION_FAIL);
-        }
+
         try {
-            Optional<User> user = userRepository.findById(userIdx);
-            List<Post> postList = postRepository.findByWriter(user.get());
             postRepository.deleteAll(postList);
             return true;
         } catch (Exception e) {
