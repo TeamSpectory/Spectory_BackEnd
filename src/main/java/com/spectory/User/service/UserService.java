@@ -64,19 +64,24 @@ public class UserService {
 
     @Transactional
     public boolean deleteUser(UserDeleteRequestDto userDeleteRequestDto, long userIdx) throws Exception {
-        if (userDeleteRequestDto.getToken().isEmpty()) {
-            throw new Exception(Message.MISSING_ARGUMENT); // 토큰 누락 시 바로 에러 처리.
+        Optional<User> user = userRepository.findById(userIdx);
+        if (user.isEmpty()) {
+            throw new Exception(Message.INVALID_USER);
         }
 
-        if (jsonWebTokenProvider.validateToken(userDeleteRequestDto.getToken()) == false) {
-            throw new Exception(Message.TOKEN_AUTHENTICATION_FAIL); // 토큰 인증 실패 시
+        if (userDeleteRequestDto.getToken().isEmpty()) {
+            throw new Exception(Message.MISSING_ARGUMENT);
         } else {
-            try {
-                userRepository.deleteById(userIdx);
-                return true;
-            } catch (Exception e) {
-                throw new Exception(Message.DELETE_USER_FAIL); // 없는 유저거나 서버 내부 에러 등으로 실패한 경우.
+            if (jsonWebTokenProvider.validateToken(userDeleteRequestDto.getToken()) == false) {
+                throw new Exception(Message.TOKEN_AUTHENTICATION_FAIL);
             }
+        }
+
+        try {
+            userRepository.deleteById(userIdx);
+            return true;
+        } catch (Exception e) {
+            throw new Exception(Message.INTERNAL_SERVER_ERR);
         }
     }
 }

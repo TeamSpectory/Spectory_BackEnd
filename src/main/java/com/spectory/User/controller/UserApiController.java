@@ -51,7 +51,7 @@ public class UserApiController {
             userService.deleteUser(deleteRequestDto, userIdx);
             return ResponseEntity.ok().body(ResponseDto.res(Status.OK, Message.DELETE_USER_SUCCESS));
         } catch (Exception e) {
-            return ResponseEntity.internalServerError().body(ResponseDto.res(Status.INTERNAL_SERVER_ERR, e.getMessage()));
+            return ResponseEntity.badRequest().body(ResponseDto.res(Status.BAD_REQUEST, e.getMessage()));
         }
     }
 
