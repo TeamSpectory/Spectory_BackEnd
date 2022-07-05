@@ -5,6 +5,7 @@ plugins {
 }
 
 jar {
+	archiveClassifier = ''
 	enabled = false
 }
 
